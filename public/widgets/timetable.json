@@ -1,0 +1,52 @@
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "Container",
+      "style": "accent",
+      "bleed": true,
+      "items": [
+        {
+          "type": "TextBlock",
+          "size": "Large",
+          "weight": "Bolder",
+          "text": "StudySync AI",
+          "color": "Light"
+        },
+        {
+          "type": "TextBlock",
+          "spacing": "None",
+          "text": "Academic Dashboard",
+          "isSubtle": true,
+          "color": "Light"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "size": "Medium",
+          "weight": "Bolder",
+          "text": "${title}"
+        },
+        {
+          "type": "TextBlock",
+          "text": "You have ${classesCount} classes scheduled for today. Check your timetable planner for room numbers and teacher details.",
+          "wrap": true
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Open Timetable",
+      "url": "https://hasniya-hamsa.github.io/academic-ai-companion/"
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5"
+}
