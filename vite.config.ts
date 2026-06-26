@@ -101,8 +101,15 @@ export default defineConfig({
             protocol: 'web+studysync',
             url: './?url=%s'
           }
-        ]
-      }
+        ],
+        display_override: ['window-controls-overlay', 'standalone'],
+        launch_handler: {
+          client_mode: 'focus-existing'
+        },
+        note_taking: {
+          new_note_url: './'
+        }
+      } as any
     })
   ],
 })
