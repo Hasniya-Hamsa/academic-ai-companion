@@ -13,6 +13,9 @@ export default defineConfig({
       strategies: 'injectManifest',
       srcDir: 'src',
       filename: 'sw.ts',
+      injectManifest: {
+        minify: false
+      },
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png', 'screenshot-desktop.png', 'screenshot-mobile.png'],
       manifest: {
@@ -102,13 +105,36 @@ export default defineConfig({
             url: './?url=%s'
           }
         ],
-        display_override: ['window-controls-overlay', 'standalone'],
+        display_override: ['tabbed', 'window-controls-overlay', 'standalone'],
         launch_handler: {
           client_mode: 'focus-existing'
         },
         note_taking: {
           new_note_url: './'
-        }
+        },
+        edge_side_panel: {
+          preferred_width: 480
+        },
+        widgets: [
+          {
+            name: 'StudySync Summary',
+            short_name: 'Summary',
+            description: "View today's timetable and stats",
+            tag: 'timetable-summary',
+            template: 'timetable-widget',
+            ms_ac_template: 'widgets/timetable.json',
+            data: 'widgets/timetable-data.json',
+            type: 'application/json',
+            screenshots: [
+              {
+                src: 'screenshot-mobile.png',
+                sizes: '750x1334',
+                type: 'image/png',
+                label: 'StudySync Widget'
+              }
+            ]
+          }
+        ]
       } as any
     })
   ],
