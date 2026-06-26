@@ -24,7 +24,7 @@ export default defineConfig({
         description: 'AI-Powered Academic Companion with Timetable, Notes, and NotebookLM Workspace',
         theme_color: '#0f172a',
         background_color: '#0f172a',
-        display: 'standalone',
+        display: 'tabbed',
         orientation: 'portrait',
         categories: ['education', 'productivity', 'utilities'],
         icons: [
@@ -125,6 +125,13 @@ export default defineConfig({
             ms_ac_template: 'widgets/timetable.json',
             data: 'widgets/timetable-data.json',
             type: 'application/json',
+            icons: [
+              {
+                src: 'icon-192.png',
+                sizes: '192x192',
+                type: 'image/png'
+              }
+            ],
             screenshots: [
               {
                 src: 'screenshot-mobile.png',
