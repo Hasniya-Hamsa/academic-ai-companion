@@ -6,14 +6,67 @@ import Assignments from './components/Assignments';
 import Notes from './components/Notes';
 import NotebookLM from './components/NotebookLM';
 import Settings from './components/Settings';
+import { dbService } from './services/db';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
+
   useEffect(() => {
     // Set theme from localstorage or default to dark
     const theme = localStorage.getItem('studysync_theme') || 'dark';
     document.body.classList.toggle('light-theme', theme === 'light');
+
+    // Handle shared content from Android Share Target
+    const params = new URLSearchParams(window.location.search);
+    const shareTitle = params.get('share_title');
+    const shareText = params.get('share_text');
+    const shareUrl = params.get('share_url');
+
+    if (shareTitle || shareText || shareUrl) {
+      const content = `${shareText || ''} ${shareUrl || ''}`.trim();
+      const title = shareTitle || 'Shared Content';
+
+      const createSharedNote = async () => {
+        try {
+          const newNote = {
+            id: crypto.randomUUID(),
+            title: title,
+            content: content,
+            folderId: '',
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          };
+          await dbService.saveNote(newNote);
+          setActiveTab('notes');
+          // Clear query params so it doesn't trigger again on refresh
+          window.history.replaceState({}, document.title, window.location.pathname);
+        } catch (e) {
+          console.error('Failed to save shared content note:', e);
+        }
+      };
+      createSharedNote();
+    }
+
+    // Set up badge updates for pending assignments
+    updateAppBadge();
   }, []);
+
+  const updateAppBadge = () => {
+    try {
+      const raw = localStorage.getItem('studysync_assignments');
+      if (raw && 'setAppBadge' in navigator) {
+        const list = JSON.parse(raw);
+        const pendingCount = list.filter((a: any) => a.status !== 'done').length;
+        if (pendingCount > 0) {
+          (navigator as any).setAppBadge(pendingCount);
+        } else {
+          (navigator as any).clearAppBadge();
+        }
+      }
+    } catch (e) {
+      console.error('App badging API is not supported or failed:', e);
+    }
+  };
 
   const handleApiKeyChange = () => {
     // Left empty for compatibility with settings change handler signature

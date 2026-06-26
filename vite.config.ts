@@ -10,6 +10,9 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png', 'screenshot-desktop.png', 'screenshot-mobile.png'],
       manifest: {
@@ -71,6 +74,32 @@ export default defineConfig({
             type: 'image/png',
             form_factor: 'narrow',
             label: 'StudySync AI Mobile Notes View'
+          }
+        ],
+        file_handlers: [
+          {
+            action: './',
+            accept: {
+              'text/plain': ['.txt', '.text'],
+              'text/markdown': ['.md', '.markdown'],
+              'application/pdf': ['.pdf']
+            }
+          }
+        ],
+        share_target: {
+          action: './',
+          method: 'GET',
+          enctype: 'application/x-www-form-urlencoded',
+          params: {
+            title: 'share_title',
+            text: 'share_text',
+            url: 'share_url'
+          }
+        },
+        protocol_handlers: [
+          {
+            protocol: 'web+studysync',
+            url: './?url=%s'
           }
         ]
       }
