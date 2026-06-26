@@ -22,6 +22,9 @@ export default defineConfig({
         name: 'StudySync AI',
         short_name: 'StudySync',
         description: 'AI-Powered Academic Companion with Timetable, Notes, and NotebookLM Workspace',
+        id: '/academic-ai-companion/',
+        dir: 'ltr',
+        lang: 'en-US',
         theme_color: '#0f172a',
         background_color: '#0f172a',
         display: 'tabbed',
@@ -30,9 +33,9 @@ export default defineConfig({
         icons: [
           {
             src: 'favicon.svg',
-            sizes: '192x192 512x512',
+            sizes: 'any',
             type: 'image/svg+xml',
-            purpose: 'any maskable'
+            purpose: 'any'
           },
           {
             src: 'icon-192.png',
@@ -106,8 +109,22 @@ export default defineConfig({
           }
         ],
         display_override: ['tabbed', 'window-controls-overlay', 'standalone'],
+        prefer_related_applications: false,
+        related_applications: [
+          {
+            platform: 'play',
+            url: 'https://play.google.com/store/apps/details?id=io.github.hasniya_hamsa.academic_ai_companion',
+            id: 'io.github.hasniya_hamsa.academic_ai_companion'
+          }
+        ],
+        scope_extensions: [
+          {
+            origin: 'https://hasniya-hamsa.github.io'
+          }
+        ],
+        iarc_rating_id: 'e8e19bcf-168a-40a2-aa5b-0105342a3f81',
         launch_handler: {
-          client_mode: 'focus-existing'
+          client_mode: ['focus-existing']
         },
         note_taking: {
           new_note_url: './'
